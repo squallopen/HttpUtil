@@ -4,6 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+
+
+
     <groupId>com.github.squallopen</groupId>
     <artifactId>HttpUtil</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -33,5 +42,37 @@
         </dependency>
 
     </dependencies>
+
+    <scm>
+        <tag>master</tag>
+        <url>https://github.com/wxisme/bloomfilter.git</url>
+        <connection>scm:git:https://github.com/squallopen/HttpUtil.git</connection>
+        <developerConnection>scm:git:scm:git:https://github.com/squallopen/HttpUtil.git</developerConnection>
+    </scm>
+
+    <mailingLists>
+        <mailingList>
+            <name>squall</name>
+            <post>6993389@qq.com</post>
+        </mailingList>
+    </mailingLists>
+
+    <developers>
+        <developer>
+            <id>squall</id>
+            <name>squall</name>
+            <email>6993389@qq.com</email>
+            <url>http://blog.csdn.net/squall1009</url>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
 </project>

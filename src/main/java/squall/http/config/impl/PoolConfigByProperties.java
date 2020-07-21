@@ -1,25 +1,21 @@
 package squall.http.config.impl;
 
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import squall.http.config.PoolConfig;
-import squall.http.utils.HttpURIBuilder;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import squall.http.config.PoolConfig;
+
 /**
  * @author squall
  * @version 0.1.0
- * @Description
- * @create 2020-07-21 09:06
  * @since 0.1.0
  **/
 public class PoolConfigByProperties implements PoolConfig {
@@ -34,7 +30,7 @@ public class PoolConfigByProperties implements PoolConfig {
         } catch (IOException e) {
             logger.error("pool.properties not found:", e);
         }
-        Enumeration fileName = proxyProperties.propertyNames();
+        Enumeration<?> fileName = proxyProperties.propertyNames();
         while (fileName.hasMoreElements()) {
             String strKey = (String) fileName.nextElement();
             String strValue = proxyProperties.getProperty(strKey);
@@ -42,8 +38,11 @@ public class PoolConfigByProperties implements PoolConfig {
         }
     }
 
+    /**
+     * 构造方法
+     */
     public PoolConfigByProperties() {
-        logger.debug("pool properties: " +properties);
+        logger.debug("pool properties: {}",properties);
         this.specialPoolConfig = new ConcurrentHashMap<>();
         Set<String> ketSet = properties.keySet();
         /*连接池获取连接等待时间毫秒
@@ -60,7 +59,7 @@ public class PoolConfigByProperties implements PoolConfig {
                     maxTotal = DEFAULT_MAX_TOTAL;
                 else
                     maxTotal = lMaxTotal.intValue();
-            } else if (name.equals("connectTimeout")) {
+            } else if (name.equals("defaultMaxPerRoute")) {
                 lDefaultMaxPerRoute = Integer.valueOf(properties.get(name));
                 if(lDefaultMaxPerRoute == null || lDefaultMaxPerRoute.intValue() <= 0)
                     defaultMaxPerRoute = DEFAULT_MAX_PERTOUTE;
@@ -96,12 +95,29 @@ public class PoolConfigByProperties implements PoolConfig {
     }
 
 
+    /**
+     * 连接池最大连接数
+     */
     private int maxTotal = 0;
 
+    /**
+     * 连接池默认每个路由的最大连接数
+     */
     private int defaultMaxPerRoute = 0;
 
+    /**
+     * 指定的目标的最大连接数
+     */
     private Map<String, Integer> specialPoolConfig = null;
 
     private static int DEFAULT_MAX_TOTAL = 400;
     private static int DEFAULT_MAX_PERTOUTE = 20;
+    
+	@Override
+	public String toString() {
+		return "PoolConfigByProperties [maxTotal=" + maxTotal + ", defaultMaxPerRoute=" + defaultMaxPerRoute
+				+ ", specialPoolConfig=" + specialPoolConfig + "]";
+	}
+    
+    
 }

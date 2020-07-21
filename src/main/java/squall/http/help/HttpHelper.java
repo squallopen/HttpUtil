@@ -1,25 +1,23 @@
 package squall.http.help;
 
 
-import org.apache.http.HttpHost;
-
-import org.apache.http.conn.routing.HttpRoute;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import squall.http.config.HttpProxySelector;
-import squall.http.utils.HttpURIBuilder;
-
-
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
+
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.conn.routing.HttpRoute;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import squall.http.config.HttpProxySelector;
+import squall.http.utils.HttpURIBuilder;
 
 
 /**
  * @author squall
  * @version 0.1.0
- * @Description
- * @create 2020-07-16 21:10
  * @since 0.1.0
  **/
 public class HttpHelper {
@@ -79,8 +77,27 @@ public class HttpHelper {
         return httpRoute;
 
     }
+    
+    /**
+     * 加Header用的
+     * @param request 请求
+     * @param params 添加参数
+     */
+    public static void addHeader(HttpRequest request, Map<String,String> params) {
+    	if(request != null && params != null && params.size() != 0)
+    	for(Map.Entry<String, String> entry : params.entrySet()) {
+    		request.addHeader(entry.getKey(),entry.getValue());
+    	}
+    	
+    }
 
 
+    /**
+     * 根据url和代理选择器构建HttpRoute
+     * @param url 目标url
+     * @param proxySelector 代理选择器
+     * @return 目标的HttpRoute
+     */
     public static HttpRoute getHttpRoute(String url, HttpProxySelector proxySelector) {
         HttpHost target = getHttpHostByStr(url);
         return getHttpRoute(target, proxySelector);

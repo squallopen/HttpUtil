@@ -15,8 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author squall
  * @version 0.1.0
- * @Description
- * @create 2020-07-20 19:21
  * @since 0.1.0
  **/
 public class HttpProxySelectorByProperties extends HttpProxySelector {
@@ -34,7 +32,7 @@ public class HttpProxySelectorByProperties extends HttpProxySelector {
         } catch (IOException e) {
             logger.error("proxy.properties not found",e);
         }
-        Enumeration fileName = proxyProperties.propertyNames();
+        Enumeration<?> fileName = proxyProperties.propertyNames();
         while (fileName.hasMoreElements()) {
             String strKey = (String) fileName.nextElement();
             String strValue = proxyProperties.getProperty(strKey);
@@ -43,8 +41,11 @@ public class HttpProxySelectorByProperties extends HttpProxySelector {
     }
 
 
+    /**
+     * 构造方法
+     */
     public HttpProxySelectorByProperties() {
-        logger.debug("proxy properties:",properties);
+        logger.debug("proxy properties:{}", properties.toString());
         this.specialProxyMap = new ConcurrentHashMap<>();
         this.ignoreHosts = ConcurrentHashMap.newKeySet();
         Set<String> ketSet = properties.keySet();

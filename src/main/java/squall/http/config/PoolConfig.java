@@ -4,10 +4,9 @@ package squall.http.config;
 import java.util.Map;
 
 /**
+ * 描述pool参数的接口，为了和spring的读取value解耦不引入spring的依赖
  * @author squall
  * @version 0.1.0
- * @Description 描述pool参数的接口，为了和spring的读取value解耦不引入spring的依赖
- * @create 2020-07-15 22:41
  * @since 0.1.0
  **/
 public interface PoolConfig {

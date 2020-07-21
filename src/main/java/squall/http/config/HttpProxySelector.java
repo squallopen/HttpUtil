@@ -12,8 +12,6 @@ import java.util.Set;
  * 还是为了和spring解耦
  * @author squall
  * @version 0.1.0
- * @Description
- * @create 2020-07-16 20:21
  * @since 0.1.0
  **/
 public abstract class HttpProxySelector {
@@ -45,10 +43,22 @@ public abstract class HttpProxySelector {
         return proxy;
     }
 
+    /**
+     * 返回默认的代理
+     * @return 默认代理的HttpHost描述
+     */
     protected abstract HttpHost getDefaultProxy();
 
+    /**
+     * 返回特定的目标的代理
+     * @return 用特殊代理的target HttpHost集合
+     */
     protected abstract Map<HttpHost, HttpHost> getSpecialProxyMap();
 
+    /**
+     * 不使用代理的traget
+     * @return 不使用代理的target HttpHost集合
+     */
     protected abstract Set<HttpHost> getIgnoreHosts();
 
 }

@@ -4,7 +4,6 @@ import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import squall.http.config.HttpProxySelector;
 import squall.http.config.RequestConfigDelegater;
 import squall.http.utils.HttpURIBuilder;
 
@@ -19,8 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author squall
  * @version 0.1.0
- * @Description
- * @create 2020-07-20 21:35
  * @since 0.1.0
  **/
 public class RequestConfigByProperties extends RequestConfigDelegater {
@@ -35,7 +32,7 @@ public class RequestConfigByProperties extends RequestConfigDelegater {
         } catch (IOException e) {
             logger.error("request.properties not found:", e);
         }
-        Enumeration fileName = proxyProperties.propertyNames();
+        Enumeration<?> fileName = proxyProperties.propertyNames();
         while (fileName.hasMoreElements()) {
             String strKey = (String) fileName.nextElement();
             String strValue = proxyProperties.getProperty(strKey);
@@ -44,8 +41,11 @@ public class RequestConfigByProperties extends RequestConfigDelegater {
     }
 
 
+    /**
+     * 构造方法
+     */
     public RequestConfigByProperties() {
-        logger.debug("request properties: " +properties);
+        logger.debug("request properties: {}" +properties);
         this.specialTimeoutConfig = new ConcurrentHashMap<>();
         Set<String> ketSet = properties.keySet();
         /*连接池获取连接等待时间毫秒
@@ -100,12 +100,12 @@ public class RequestConfigByProperties extends RequestConfigDelegater {
     }
 
     @Override
-    public RequestConfig getDefaultTimeoutConfig() {
+    public RequestConfig getDefaultRequestConfig() {
         return defaultTimeoutConfig;
     }
 
     @Override
-    public Map<HttpHost, RequestConfig> getSpecialTimeoutConfig() {
+    public Map<HttpHost, RequestConfig> getSpecialRequestConfig() {
         return specialTimeoutConfig;
     }
 
