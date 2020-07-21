@@ -38,6 +38,7 @@ public class HttpUtil {
 	 * @param url    访问的URL
 	 * @param params 参数
 	 * @return 返回的页面
+	 * @throws URISyntaxException url错误
 	 */
 	public static String doGet(String url, List<NameValuePair> params) throws URISyntaxException {
 		URIBuilder uriBuilder = new URIBuilder(url, StandardCharsets.UTF_8);
@@ -103,6 +104,7 @@ public class HttpUtil {
 	 * 发送指定的json到指定的url
 	 * @param url 发送的目标
 	 * @param json json字符串
+	 * @param headers 要设置的header头
 	 * @return 返回的json字符串
 	 * @throws URISyntaxException url格式错误
 	 */

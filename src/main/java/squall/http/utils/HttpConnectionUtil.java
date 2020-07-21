@@ -50,7 +50,7 @@ public class HttpConnectionUtil {
 
 	/**
 	 * 
-	 * @param httpProxySelector
+	 * @param httpProxySelector http代理选择器
 	 * @return null为了继续连着调用
 	 */
 	public static HttpConnectionUtil initProxy(HttpProxySelector httpProxySelector) {
@@ -61,7 +61,7 @@ public class HttpConnectionUtil {
 	/**
 	 * 设置请求默认值
 	 * 
-	 * @param requestConfigDelegater
+	 * @param requestConfigDelegater 获取RequestConfig的对象
 	 * @return null为了继续连着调用
 	 */
 	public static HttpConnectionUtil setRequestConfigDelegater(RequestConfigDelegater requestConfigDelegater) {
@@ -72,7 +72,7 @@ public class HttpConnectionUtil {
 	/**
 	 * 获取http连接
 	 * 
-	 * @param uri
+	 * @param uri target的URL
 	 * @return http连接
 	 */
 	public static CloseableHttpClient getHttpClient(URI uri) {

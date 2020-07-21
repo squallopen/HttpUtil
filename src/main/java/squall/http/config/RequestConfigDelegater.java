@@ -17,6 +17,7 @@ public abstract class RequestConfigDelegater {
 
     /**
      * 返回目标的RequestConfig
+     * @param target 目标的HttpHost
      * @return 目标的RequestConfig
      */
     public RequestConfig getRequestConfig(HttpHost target) {

@@ -12,8 +12,6 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author squall
  * @version 0.1.0
- * @Description
- * @create 2020-07-16 21:21
  * @since 0.1.0
  **/
 public class HttpURIBuilder extends URIBuilder {
