@@ -3,7 +3,6 @@ package squall.http.config;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 
-import java.net.URI;
 import java.util.Map;
 
 /**
