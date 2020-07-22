@@ -4,7 +4,9 @@ http请求的封装类，目前使用的HttpClient的实现，施工中
 目前只封装了http的实现，后续会添加，所有的配置请查看 .properties文件，也可以自己实现相关接口即可。
 参考代码请查看 src/test下的代码。
 
-目前版本 0.1 release，后续会继续实现其他功能
+如果使用过程中有疑问或者发现bug，可以加QQ群1127385601
+
+目前版本 0.1.1 release，后续会继续实现其他功能
 
 连接池加代理的实现举例
 
@@ -36,7 +38,7 @@ public class PoolProxyTest {
         HttpConnectionUtil.initProxy(httpProxySelector);
         String response = null;
         try {
-            response = HttpUtil.doGet("http://www.apache.org",null);
+            response = HttpUtil.doGet("http://www.apache.org");
             logger.info("1:" + response);
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -45,7 +47,7 @@ public class PoolProxyTest {
         for(int i = 0 ; i < 5; ++i){
             // System.err.println(i);
             try {
-                String responseI = HttpUtil.doGet("http://www.apache.org",null);
+                String responseI = HttpUtil.doGet("http://www.apache.org");
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
