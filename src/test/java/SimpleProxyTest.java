@@ -21,7 +21,7 @@ public class SimpleProxyTest {
         HttpConnectionUtil.initProxy(httpProxySelector);
         long begin = System.currentTimeMillis();
         for(int i = 0; i < 20 ; ++i) {
-            String response = HttpUtil.doGet("http://www.apache.org", null);
+            String response = HttpUtil.doGet("http://www.apache.org");
         }
         long end = System.currentTimeMillis();
         logger.info("du " + (end - begin));

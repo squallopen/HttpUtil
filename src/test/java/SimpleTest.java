@@ -25,7 +25,7 @@ public class SimpleTest {
         long begin = System.currentTimeMillis();
         String  response = null;
         for (int i = 0; i < 1; ++i) {
-            response = HttpUtil.doGet("http://www.apache.org", null);
+            response = HttpUtil.doGet("http://www.apache.org");
         }
         long end = System.currentTimeMillis();
         logger.info("du " + (end - begin));

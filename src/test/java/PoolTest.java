@@ -40,7 +40,7 @@ public class PoolTest {
         });
         String response = null;
         try {
-            response = HttpUtil.doGet("http://www.apache.org",null);
+            response = HttpUtil.doGet("http://www.apache.org");
             logger.info("1:" + response);
         } catch (URISyntaxException e) {
             logger.error("",e);
@@ -49,7 +49,7 @@ public class PoolTest {
         for(int i = 0 ; i < 20; ++i){
             // System.err.println(i);
             String responseI = null;
-                responseI = HttpUtil.doGet("http://www.apache.org",null);
+                responseI = HttpUtil.doGet("http://www.apache.org");
 
         }
         long end = System.currentTimeMillis();

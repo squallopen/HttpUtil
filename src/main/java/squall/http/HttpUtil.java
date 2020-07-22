@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,18 @@ public class HttpUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
+	
+	/**
+	 * 请求指定的URL，并返回返回的字符串
+	 * 
+	 * @param url 访问的地址
+	 * @return 返回的字符串
+	 * @throws URISyntaxException url格式错误
+	 */
+	public static String doGet(String url) throws URISyntaxException {
+		return doGet(url, (List<NameValuePair>) null);
+	}
+	
 	/**
 	 * get请求带参数
 	 *
@@ -61,17 +75,31 @@ public class HttpUtil {
 		}
 		return returnStr;
 	}
-
+	
 	/**
-	 * 请求指定的URL，并返回返回的字符串
-	 * 
-	 * @param url 访问的地址
-	 * @return 返回的字符串
-	 * @throws URISyntaxException url格式错误
+	 * get请求带参数
+	 *
+	 * @param url    访问的URL
+	 * @param params 参数
+	 * @return 返回的页面
+	 * @throws URISyntaxException url错误
 	 */
-	public static String doGet(String url) throws URISyntaxException {
-		return doGet(url, null);
+	public static String doGet(String url, Map<String,String> params) throws URISyntaxException {
+		List<NameValuePair> paramsList = new ArrayList<NameValuePair>();
+		if (params != null && params.size() != 0)
+		{
+			for(Map.Entry<String, String> entry : params.entrySet()) {
+				paramsList.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));	
+			}
+		}
+		if(paramsList.size() == 0) {
+			paramsList = null;
+		}
+		return doGet(url, paramsList);
+
 	}
+
+
 
 	/**
 	 * 发送指定的json到指定的url

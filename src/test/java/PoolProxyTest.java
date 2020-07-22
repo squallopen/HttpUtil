@@ -27,7 +27,7 @@ public class PoolProxyTest {
         HttpConnectionUtil.initProxy(httpProxySelector);
         String response = null;
         try {
-            response = HttpUtil.doGet("http://www.apache.org",null);
+            response = HttpUtil.doGet("http://www.apache.org");
             logger.info("1:" + response);
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public class PoolProxyTest {
         for(int i = 0 ; i < 5; ++i){
             // System.err.println(i);
             try {
-                String responseI = HttpUtil.doGet("http://www.apache.org",null);
+                String responseI = HttpUtil.doGet("http://www.apache.org");
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
