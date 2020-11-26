@@ -1,7 +1,7 @@
 #default proxy
-defaultProxy=http://127.1.1.1:8228
+defaultProxy=http://127.0.0.1:8228
 #ignore proxy targets split with ;
-ignoreHosts=https://www.baidu.com;http://www.xici.net/;http://127.0.0.1:7799
+#ignoreHosts=https://www.baidu.com;http://www.xici.net/;http://127.0.0.1:7799
 #special target and proxy
 http\://www.apache.org=http://127.0.0.1:8228
 http\://www.google.cn=http://127.0.0.1:8228

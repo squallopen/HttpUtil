@@ -8,7 +8,7 @@ import squall.http.config.HttpProxySelector;
 import squall.http.config.impl.HttpProxySelectorByProperties;
 import squall.http.config.impl.PoolConfigByProperties;
 import squall.http.config.impl.RequestConfigByProperties;
-import squall.http.utils.HttpConnectionUtil;
+import squall.http.utils.HttpClientUtil;
 
 /**
  * @author squall
@@ -21,10 +21,10 @@ public class PoolProxyTest {
     private static Logger logger = LoggerFactory.getLogger(PoolProxyTest.class);
     public static void main(String args[]) {
 
-        HttpConnectionUtil.initPool(new PoolConfigByProperties());
+    	HttpClientUtil.initPool(new PoolConfigByProperties());
         HttpProxySelector httpProxySelector = new HttpProxySelectorByProperties();
-        HttpConnectionUtil.setRequestConfigDelegater(new RequestConfigByProperties());
-        HttpConnectionUtil.initProxy(httpProxySelector);
+        HttpClientUtil.setRequestConfigDelegater(new RequestConfigByProperties());
+        HttpClientUtil.initProxy(httpProxySelector);
         String response = null;
         try {
             response = HttpUtil.doGet("http://www.apache.org");

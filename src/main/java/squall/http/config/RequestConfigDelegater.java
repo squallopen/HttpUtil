@@ -1,6 +1,5 @@
 package squall.http.config;
 
-import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 
 import java.util.Map;
@@ -16,12 +15,12 @@ public abstract class RequestConfigDelegater {
 
     /**
      * 返回目标的RequestConfig
-     * @param target 目标的HttpHost
+     * @param target 目标的HttpHost的uri
      * @return 目标的RequestConfig
      */
-    public RequestConfig getRequestConfig(HttpHost target) {
+    public RequestConfig getRequestConfig(String target) {
         RequestConfig requestConfig = null;
-        Map<HttpHost,RequestConfig> specicalTmeoutConfig  = getSpecialRequestConfig();
+        Map<String,RequestConfig> specicalTmeoutConfig  = getSpecialRequestConfig();
         if(specicalTmeoutConfig != null && specicalTmeoutConfig.size() != 0) {
             requestConfig = specicalTmeoutConfig.get(target);
         }
@@ -37,6 +36,6 @@ public abstract class RequestConfigDelegater {
      */
     public abstract RequestConfig getDefaultRequestConfig();
 
-    public abstract Map<HttpHost,RequestConfig> getSpecialRequestConfig();
+    public abstract Map<String,RequestConfig> getSpecialRequestConfig();
 
 }

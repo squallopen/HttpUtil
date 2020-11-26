@@ -1,6 +1,5 @@
 package squall.http.config.impl;
 
-import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +77,7 @@ public class RequestConfigByProperties extends RequestConfigDelegater {
             } else {
                 /*特殊的*/
                 try {
-                    HttpHost target = new HttpURIBuilder(name).getHttpHost();
+                    String target = new HttpURIBuilder(name).getTargetHostURIStr();
                     String requestStr = properties.get(name);
                     specialTimeoutConfig.put(target, genRequestConfigByStr(requestStr));
                 } catch (URISyntaxException e) {
@@ -105,7 +104,7 @@ public class RequestConfigByProperties extends RequestConfigDelegater {
     }
 
     @Override
-    public Map<HttpHost, RequestConfig> getSpecialRequestConfig() {
+    public Map<String, RequestConfig> getSpecialRequestConfig() {
         return specialTimeoutConfig;
     }
 
@@ -157,7 +156,7 @@ public class RequestConfigByProperties extends RequestConfigDelegater {
 
     private RequestConfig defaultTimeoutConfig = null;
 
-    private Map<HttpHost, RequestConfig> specialTimeoutConfig = null;
+    private Map<String, RequestConfig> specialTimeoutConfig = null;
 
 
 

@@ -1,16 +1,33 @@
 package squall.http.help;
 
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.routing.HttpRoute;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import squall.http.bean.HttpBean;
 import squall.http.config.HttpProxySelector;
 import squall.http.utils.HttpURIBuilder;
 
@@ -102,5 +119,71 @@ public class HttpHelper {
         HttpHost target = getHttpHostByStr(url);
         return getHttpRoute(target, proxySelector);
     }
-
+    
+    /**
+     * 转换为Post对象
+     * @param uri 访问的URI的描述
+     * @param bean 请求的参数
+     * @return HttpPost对象
+     * @throws UnsupportedEncodingException 
+     */
+    public static HttpPost getHttpPost(URI uri,HttpBean bean) throws UnsupportedEncodingException {
+    	HttpPost post = new HttpPost(uri);
+    	Map<String,List<String>> headers = bean.getHeaders();
+    	if( headers != null && headers.size() != 0) {
+    		for(Map.Entry<String, List<String>> entry : headers.entrySet()) {
+    			for(String value:entry.getValue())
+    			{
+    			    post.addHeader(entry.getKey(),value);
+    			}
+    		}
+    	}
+    	String jsonBody = bean.getJsonBody();
+    	Map<String,List<String>> params = bean.getParameterBody();
+    	if(jsonBody != null && !"".equals(jsonBody)) {
+	    	StringEntity entityParam = new StringEntity(bean.getJsonBody(), StandardCharsets.UTF_8);
+	    	post.setEntity(entityParam);
+    	}else if(params != null && params.size()!=0) {
+    		
+    		List<NameValuePair> paramsList = new ArrayList<NameValuePair>();
+    		for(Map.Entry<String, List<String>> entry : params.entrySet()) {
+    			for(String value:entry.getValue())
+    			{
+    				paramsList.add(new BasicNameValuePair(entry.getKey(),value));
+    			}
+    		}
+    		post.setEntity(new UrlEncodedFormEntity(paramsList, "UTF-8"));
+    	}
+    	return post;
+    	
+    }
+    
+    public static HttpBean getHttpBean(HttpResponse response) throws ParseException, IOException {
+    	HttpBean bean = new HttpBean();
+    	Header[] heads =  response.getAllHeaders();
+    	if(heads != null && heads.length != 0) {
+    		Map<String,List<String>> headMap = new HashMap<String,List<String>>();
+	    	for(Header head : heads) {
+	    		if(headMap.containsKey(head.getName()))
+	    		{
+	    			headMap.get(head.getName()).add(head.getValue());
+	    		}else {
+		    		List<String> list = new ArrayList<String>();
+		    		list.add(head.getValue());
+		    		headMap.put(head.getName(),list);
+	    		}
+	    	}
+	    	bean.setHeaders(headMap);
+    	}
+    	HttpEntity entity = response.getEntity();
+		if (entity != null) {
+			// 按指定编码转换结果实体为String类型
+			bean.setJsonBody(EntityUtils.toString(entity, "UTF-8"));
+		}else {
+			bean.setJsonBody("");
+		}
+		EntityUtils.consume(entity);
+		return bean;
+    	
+    }
 }

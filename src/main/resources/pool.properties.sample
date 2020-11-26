@@ -1,3 +1,4 @@
+isKeepConnection=1
 maxToal=200
 defaultMaxPerRoute=40
 http\://www.apache.org=50

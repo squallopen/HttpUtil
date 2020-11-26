@@ -1,12 +1,13 @@
 
+import java.net.URISyntaxException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import squall.http.HttpUtil;
 import squall.http.config.HttpProxySelector;
 import squall.http.config.impl.HttpProxySelectorByProperties;
-import squall.http.utils.HttpConnectionUtil;
-
-import java.net.URISyntaxException;
+import squall.http.utils.HttpClientUtil;
 
 /**
  * @author squall
@@ -18,7 +19,7 @@ public class SimpleProxyTest {
 
     public static void main(String args[]) throws URISyntaxException {
         HttpProxySelector httpProxySelector = new HttpProxySelectorByProperties();
-        HttpConnectionUtil.initProxy(httpProxySelector);
+        HttpClientUtil.initProxy(httpProxySelector);
         long begin = System.currentTimeMillis();
         for(int i = 0; i < 20 ; ++i) {
             String response = HttpUtil.doGet("http://www.apache.org");

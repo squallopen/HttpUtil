@@ -30,9 +30,9 @@ public class PoolConfigByProperties implements PoolConfig {
         } catch (IOException e) {
             logger.error("pool.properties not found:", e);
         }
-        Enumeration<?> fileName = proxyProperties.propertyNames();
-        while (fileName.hasMoreElements()) {
-            String strKey = (String) fileName.nextElement();
+        Enumeration<?> keyName = proxyProperties.propertyNames();
+        while (keyName.hasMoreElements()) {
+            String strKey = (String) keyName.nextElement();
             String strValue = proxyProperties.getProperty(strKey);
             properties.put(strKey, strValue);
         }
@@ -48,12 +48,20 @@ public class PoolConfigByProperties implements PoolConfig {
         /*连接池获取连接等待时间毫秒
          */
         Integer lMaxTotal = null;
+        
+        Integer lShareConnection = null;
 
         /*连接target等待时间毫秒
          */
         Integer lDefaultMaxPerRoute = null;
         for (String name : ketSet) {
-            if (name.equals("maxToal")) {
+        	if (name.equals("shareConnection")) {
+        		lShareConnection = Integer.valueOf(properties.get(name));
+                if(lShareConnection == null || lShareConnection.intValue() == 0)
+                	shareConnection = false;
+                else
+                	shareConnection = true;
+            }else if (name.equals("maxToal")) {
                 lMaxTotal = Integer.valueOf(properties.get(name));
                 if(lMaxTotal == null || lMaxTotal.intValue() <= 0)
                     maxTotal = DEFAULT_MAX_TOTAL;
@@ -77,6 +85,10 @@ public class PoolConfigByProperties implements PoolConfig {
             }
         }
     }
+    
+	/*
+	 * @Override public boolean isShareConnection() { return shareConnection; }
+	 */
 
 
     @Override
@@ -93,7 +105,10 @@ public class PoolConfigByProperties implements PoolConfig {
     public Map<String, Integer> getSpecHostsMax() {
         return null;
     }
-
+    
+    
+    
+    
 
     /**
      * 连接池最大连接数
@@ -104,6 +119,11 @@ public class PoolConfigByProperties implements PoolConfig {
      * 连接池默认每个路由的最大连接数
      */
     private int defaultMaxPerRoute = 0;
+    
+    /**
+     * httpclient关闭后是否保持连接
+     */
+    private boolean shareConnection = true;
 
     /**
      * 指定的目标的最大连接数
@@ -113,11 +133,10 @@ public class PoolConfigByProperties implements PoolConfig {
     private static int DEFAULT_MAX_TOTAL = 400;
     private static int DEFAULT_MAX_PERTOUTE = 20;
     
-	@Override
-	public String toString() {
-		return "PoolConfigByProperties [maxTotal=" + maxTotal + ", defaultMaxPerRoute=" + defaultMaxPerRoute
-				+ ", specialPoolConfig=" + specialPoolConfig + "]";
-	}
+  
+
+
+
     
     
 }

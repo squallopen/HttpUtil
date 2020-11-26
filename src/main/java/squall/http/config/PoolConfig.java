@@ -30,6 +30,13 @@ public interface PoolConfig {
      * @return 特定的路由机器最大连接数 返回的String为符合URI的格式如 http://www.apache.org https://www.baidu.com:1443
      */
     Map<String, Integer> getSpecHostsMax();
+    
+    /*
+     * 是否复用连接，如果复用连接的话，会尽量复用连接，但是可能会存在大量连接
+     * 如果只是访问特定的几个网站建议打开，如果使用程序会访问大量的网站建议关闭
+     * @return true-保持连接复用 false-每次使用完后关闭连接
+     */
+	/* boolean isShareConnection(); */
 
 
 }

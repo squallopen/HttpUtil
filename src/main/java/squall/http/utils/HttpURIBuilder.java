@@ -6,6 +6,7 @@ import org.apache.http.client.utils.URIBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -53,6 +54,18 @@ public class HttpURIBuilder extends URIBuilder {
             this.httpHost = new HttpHost(getHost(), getPort(), getScheme());
         }
         return httpHost;
+    }
+    
+    public String getTargetHostURIStr() {
+            StringBuilder buffer = new StringBuilder();
+            buffer.append(this.getScheme());
+            buffer.append("://");
+            buffer.append(this.getHost());
+            if (this.getPort() != -1) {
+                buffer.append(':');
+                buffer.append(Integer.toString(this.getPort()));
+            }
+            return buffer.toString();
     }
 
 
